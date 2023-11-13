@@ -40,6 +40,18 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
+    public void sendSticker(Long who, String what) {
+
+        SendMessage ss = SendMessage.builder()
+                .chatId(who.toString()) // Who are we sending a message to
+                .text(what).build();    // Sticker content
+        try {
+            execute(ss);                        // Actually sending the message
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);      // Any error will be printed here
+        }
+    }
+
     public void sendDice(Long who, String what) {
         SendDice sd = SendDice.builder()
                 .chatId(who.toString())         // Who are we sending a message to
