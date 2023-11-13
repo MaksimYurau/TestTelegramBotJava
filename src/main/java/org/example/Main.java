@@ -13,5 +13,6 @@ public class Main {
         bot.sendText(692500222L, "Hello World!");  // The L just turns the Integer into a Long
         bot.sendSticker(692500222L, EmojiParser.parseToUnicode(":blush:")); // The L just turns the Integer into a Long
         bot.sendDice(692500222L, "\uD83C\uDFAF");  // The L just turns the Integer into a Long
+        bot.sendPhoto(692500222L, "C:/Users/User/Desktop/JPEG_example_flower.jpg", "Просто JPEG файл");
     }
 }

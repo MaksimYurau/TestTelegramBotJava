@@ -3,8 +3,12 @@ package org.example;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.io.File;
 
 public class Bot extends TelegramLongPollingBot {
     @Override
@@ -60,6 +64,20 @@ public class Bot extends TelegramLongPollingBot {
             execute(sd);                        // Actually sending the message
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);      // Any error will be printed here
+        }
+    }
+
+    public void sendPhoto(Long who, String filePath, String caption) {
+        // Создаем объект InputFile с файлом фото
+        InputFile photo = new InputFile(new File(filePath));
+        SendPhoto sph = SendPhoto.builder()
+                .chatId(who.toString())
+                .photo(photo)
+                .caption(caption).build();
+        try {
+            execute(sph);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 }
