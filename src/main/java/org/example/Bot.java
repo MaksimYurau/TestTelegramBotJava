@@ -1,6 +1,7 @@
 package org.example;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.CopyMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendDice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -27,7 +28,7 @@ public class Bot extends TelegramLongPollingBot {
         var user = msg.getFrom();
         var id = user.getId();
 
-        sendText(id, msg.getText());
+        copyMessage(id, msg.getMessageId());
 
         System.out.println("First name: " + user.getFirstName() +
                 " Last name: " + user.getLastName() + " Username: "
@@ -80,6 +81,19 @@ public class Bot extends TelegramLongPollingBot {
             execute(sph);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void copyMessage(Long who, Integer msgId){
+        CopyMessage cm = CopyMessage.builder()
+                .fromChatId(who.toString())  // We copy from the user
+                .chatId(who.toString())      // And send it back to him
+                .messageId(msgId)            // Specifying what message
+                .build();
+        try {
+            execute(cm);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 }
