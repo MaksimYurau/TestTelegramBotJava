@@ -25,6 +25,9 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         var msg = update.getMessage();
         var user = msg.getFrom();
+        var id = user.getId();
+
+        sendText(id, msg.getText());
 
         System.out.println("First name: " + user.getFirstName() +
                 " Last name: " + user.getLastName() + " Username: "
@@ -33,7 +36,7 @@ public class Bot extends TelegramLongPollingBot {
                 user.getLanguageCode() + " wrote " + msg.getText());
     }
 
-    public void sendText(Long who, String what){
+    public void sendText(Long who, String what) {
         SendMessage sm = SendMessage.builder()
                 .chatId(who.toString()) // Who are we sending a message to
                 .text(what).build();    // Message content
@@ -45,7 +48,6 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public void sendSticker(Long who, String what) {
-
         SendMessage ss = SendMessage.builder()
                 .chatId(who.toString()) // Who are we sending a message to
                 .text(what).build();    // Sticker content
